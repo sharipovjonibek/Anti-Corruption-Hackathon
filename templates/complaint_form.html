@@ -1,0 +1,131 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ institution.name }} uchun shikoyat yuborish</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .oneid-logo {
+            max-height: 100px;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container my-5" style="max-width: 600px;">
+    <h1 class="mb-4 text-center">{{ institution.name }} uchun shikoyat yuborish</h1>
+
+ 
+    <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+       
+        <div class="text-center mb-3">
+            <img src="{% static 'images/oneid.png' %}" alt="One ID" class="oneid-logo">
+            <p class="fw-semibold">Yagona identifikatsiya tizimi</p>
+            <button type="button" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#oneIdModal">
+                One ID orqali shaxsingizni tasdiqlang
+            </button>
+        </div>
+
+       
+        <div class="mb-3">
+            <label for="{{ form.first_name.id_for_label }}" class="form-label">Ism</label>
+            {{ form.first_name|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.last_name.id_for_label }}" class="form-label">Familiya</label>
+            {{ form.last_name|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.passport_number.id_for_label }}" class="form-label">Pasport raqami</label>
+            {{ form.passport_number|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.phone_number.id_for_label }}" class="form-label">Telefon raqami</label>
+            {{ form.phone_number|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Shikoyat matni</label>
+            {{ form.description|add_class:"form-control" }}
+        </div>
+
+        <div class="mb-3">
+            <label for="{{ form.attachment.id_for_label }}" class="form-label">Dalil hujjat (foto, pdf, hujjat)</label>
+            {{ form.attachment|add_class:"form-control" }}
+        </div>
+
+        <button type="submit" class="btn btn-danger w-100">Shikoyat yuborish</button>
+    </form>
+
+    <a href="{% url 'institution_detail' pk=institution.id %}" class="btn btn-secondary w-100 mt-3">Orqaga</a>
+</div>
+
+
+<div class="modal fade" id="oneIdModal" tabindex="-1" aria-labelledby="oneIdModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="oneIdModalLabel">One ID orqali tasdiqlash</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+      </div>
+
+      <div class="modal-body">
+   
+        <ul class="nav nav-tabs mb-3" id="oneidTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button">Login</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="mobile-tab" data-bs-toggle="tab" data-bs-target="#mobile" type="button">Mobile-ID</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="eri-tab" data-bs-toggle="tab" data-bs-target="#eri" type="button">ERI</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="qr-tab" data-bs-toggle="tab" data-bs-target="#qr" type="button">QR-kod</button>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade show active" id="login">
+            <div class="mb-3">
+              <label class="form-label">Ism</label>
+              <input type="text" class="form-control" placeholder="Ismingizni kiriting">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Familiya</label>
+              <input type="text" class="form-control" placeholder="Familiyangizni kiriting">
+            </div>
+            <button class="btn btn-primary w-100">Kirish</button>
+            <div class="mt-2 text-center small">
+              Tizimda akkauntingiz yo‘qmi? <a href="#">Ro‘yxatdan o‘ting</a>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="mobile">
+            <p>Mobile-ID login shakli shu yerda bo'ladi.</p>
+          </div>
+          <div class="tab-pane fade" id="eri">
+            <p>ERI login shakli shu yerda bo'ladi.</p>
+          </div>
+          <div class="tab-pane fade" id="qr">
+            <p>QR-kod login shakli shu yerda bo'ladi.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
